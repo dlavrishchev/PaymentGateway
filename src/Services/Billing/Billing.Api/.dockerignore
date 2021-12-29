@@ -1,0 +1,12 @@
+.dockerignore
+.git
+.gitignore
+.vs
+.vscode
+**/*.*proj.user
+**/bin
+**/Dockerfile
+**/Dockerfile.develop
+**/obj
+**/secrets.dev.yaml
+**/values.dev.yaml

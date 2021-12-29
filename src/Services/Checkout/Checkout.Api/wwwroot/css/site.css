@@ -1,0 +1,19 @@
+﻿html,
+body {
+    height: 100%;
+}
+
+.alert {
+    padding-left: 0;
+}
+
+.alert-danger {
+    background-color: transparent;
+    border: 0;
+    color: #FB0D0D;
+    font-size: 12px;
+}
+
+.total-order-amount {
+    font-size: 2rem;
+}

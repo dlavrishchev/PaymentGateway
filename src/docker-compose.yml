@@ -1,0 +1,57 @@
+version: '3.4'
+
+services:
+  billing-api:
+    image: paymentgateway/billing-api:develop
+    build:
+      context: .
+      dockerfile: Services/Billing/Billing.Api/Dockerfile
+    container_name: billing-api
+    depends_on:
+      - mongo
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      MongoDb__ConnectionString: "mongodb://mongo:27017/billing"
+    ports:
+      - "5100:8080"
+      - "5101:8081"
+    networks:
+      - backend
+
+  checkout-api:
+    image: paymentgateway/checkout-api:develop
+    build:
+      context: .
+      dockerfile: Services/Checkout/Checkout.Api/Dockerfile
+    container_name: checkout-api
+    depends_on:
+      - billing-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      Services__Billing__Url: http://billing-api:8081
+    ports:
+      - "5102:80"
+    networks:
+      - frontend
+      - backend
+
+  mongo:
+    image: paymentgateway/mongo:develop
+    build:
+      context: ./mongo
+      dockerfile: ./Dockerfile
+    container_name: mongo
+    restart: on-failure
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - backend
+
+volumes:
+  mongo-data:
+
+networks:
+  frontend:
+  backend:

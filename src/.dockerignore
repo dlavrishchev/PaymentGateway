@@ -1,0 +1,14 @@
+.dockerignore
+.env
+.git
+.gitignore
+.vs
+.vscode
+*.md
+hosts
+LICENSE
+*.testsettings
+**/bin/
+**/obj/
+**/appsettings.localhost.json
+packages/

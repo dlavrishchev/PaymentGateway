@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package paymentgateway.billing;
+option csharp_namespace = "PaymentGateway.Grpc.Billing";
+
+service BillingService {
+	rpc CreateInvoice (CreateInvoiceRequest) returns (Invoice);
+	rpc GetPaymentFormData (GetPaymentFormDataRequest) returns (PaymentFormData);
+	rpc ProcessPayment (ProcessPaymentRequest) returns (ProcessPaymentResponse);
+}
+
+message CreateInvoiceRequest {
+	string shop_id = 1;
+	string description = 2;
+	double amount = 3;
+	string currency = 4;
+}
+
+message ProcessPaymentRequest {
+	
+	string invoice_guid = 1;
+	string payment_method_id = 2;
+	BankCardRequisites bank_card_requisites = 3;
+}
+
+message ProcessPaymentResponse {
+	
+	bool is_success = 1;
+	string decline_code = 2;
+	string decline_reason = 3;
+	string success_url = 4;
+	string fail_url = 5;
+	string transaction_id = 6;
+	string rrn = 7;
+	string masked_card_number = 8;
+}
+
+message BankCardRequisites {
+	
+	string number = 1;
+	string holder = 2;
+	string cvv = 3;
+	string expiry_month = 4;
+	string expiry_year = 5;
+}
+
+message GetPaymentFormDataRequest {
+	
+	string invoice_guid = 1;
+}
+
+message PaymentFormData {
+	
+	string invoice_guid = 1;
+	double amount = 2;
+	string currency = 3;
+	string description = 4;
+	string shop_name = 5;
+	bool is_test_transaction = 6;
+	repeated PaymentFormPaymentMethod payment_methods = 7;
+}
+
+message PaymentFormPaymentMethod {
+	
+	string id = 1;
+	string name = 2;
+}
+
+message Invoice {
+	string guid = 1;
+	string id = 2;
+	string description = 3;
+	double amount = 4;
+	string currency = 5;
+}

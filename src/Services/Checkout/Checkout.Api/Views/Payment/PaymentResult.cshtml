@@ -1,0 +1,32 @@
+﻿@model PaymentGateway.Checkout.ViewModels.PaymentResultViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="d-flex p-2 text-white">
+    @if (Model.IsSuccess)
+    {
+        <div class="p-2 bg-success">@Model.Status</div>
+    }
+    else
+    {
+        <div class="p-2 bg-danger">@Model.Status</div>
+    }
+</div>
+<div class="container">
+    <p class="text-secondary">@Model.TransactionId</p>
+    <p class="text-secondary">@Model.CardNumber</p>
+    @if (Model.IsSuccess)
+    {
+        <p class="text-secondary">@Model.Rrn</p>
+    }
+    else
+    {
+        <p class="text-secondary">@Model.DeclineCode</p>
+        <p class="text-secondary">@Model.DeclineReason</p>
+    }
+</div>
+<div class="d-flex justify-content-center p-2 text-white">
+    <a href="@Model.RedirectUrl" class="btn btn-primary" role="button">@Model.RedirectButtonCaption</a>
+</div>
